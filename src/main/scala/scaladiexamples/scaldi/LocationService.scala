@@ -1,7 +1,8 @@
-package scaladiexamples
+package scaladiexamples.scaldi
 
 import scaldi.Injector
 import scaldi.Injectable
+import scaladiexamples.Geocoder
 
 class LocationService()(implicit injector: Injector) extends Injectable {
 
