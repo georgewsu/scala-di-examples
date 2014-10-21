@@ -4,6 +4,7 @@ import com.google.inject.Guice
 import net.codingwell.scalaguice.InjectorExtensions._
 import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
+import scaladiexamples.LocationService
 
 class LocationServiceTestSuite extends FunSuite with ShouldMatchers {
 

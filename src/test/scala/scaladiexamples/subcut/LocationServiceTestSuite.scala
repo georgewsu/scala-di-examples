@@ -9,19 +9,19 @@ class LocationServiceTestSuite extends FunSuite with ShouldMatchers {
 
   test("Location service returns None for non-existent location") {
     implicit val bindingModule = ConfigurationModule
-    val locationService = new LocationService()
+    val locationService = new LocationServiceImpl()
     locationService.getCoordinates("nonexistent") should be(None)
   }
 
   test("Location service returns coordinates for San Francisco") {
     implicit val bindingModule = ConfigurationModule
-    val locationService = new LocationService()
+    val locationService = new LocationServiceImpl()
     locationService.getCoordinates("San Francisco") should be(Some((37.7749295, -122.4194155)))
   }
 
   test("Location service returns coordinates for other locations") {
     implicit val bindingModule = ConfigurationModule
-    val locationService = new LocationService()
+    val locationService = new LocationServiceImpl()
     locationService.getCoordinates("Chicago") should be(Some((41.8781136,-87.6297982)))
     locationService.getCoordinates("Los Angeles") should be(Some((34.0522342,-118.2436849)))
     locationService.getCoordinates("New York") should be(Some((40.7127837,-74.0059413)))
@@ -30,7 +30,7 @@ class LocationServiceTestSuite extends FunSuite with ShouldMatchers {
   test("Mock location service returns coordinates for San Francisco") {
     ConfigurationModule.modifyBindings { implicit testModule =>
       testModule.bind [Geocoder] toSingle new GeocoderMock
-      val locationService = new LocationService()
+      val locationService = new LocationServiceImpl()
       locationService.getCoordinates("San Francisco") should be(Some((37.7749295, -122.4194155)))
     }
   }
@@ -38,7 +38,7 @@ class LocationServiceTestSuite extends FunSuite with ShouldMatchers {
   test("Mock location service returns fake coordinates for other locations") {
     ConfigurationModule.modifyBindings { implicit testModule =>
       testModule.bind [Geocoder] toSingle new GeocoderMock
-      val locationService = new LocationService()
+      val locationService = new LocationServiceImpl()
       locationService.getCoordinates("Chicago") should be(None)
       locationService.getCoordinates("Los Angeles") should be(None)
       locationService.getCoordinates("New York") should be(None)
@@ -47,13 +47,13 @@ class LocationServiceTestSuite extends FunSuite with ShouldMatchers {
 
   test("Mock location service with test configuration returns coordinates for San Francisco") {
     implicit val bindingModule = TestConfigurationModule
-    val locationService = new LocationService()
+    val locationService = new LocationServiceImpl()
     locationService.getCoordinates("San Francisco") should be(Some((37.7749295, -122.4194155)))
   }
 
   test("Mock location service with test configuration returns fake coordinates for other locations") {
     implicit val bindingModule = TestConfigurationModule
-    val locationService = new LocationService()
+    val locationService = new LocationServiceImpl()
     locationService.getCoordinates("Chicago") should be(None)
     locationService.getCoordinates("Los Angeles") should be(None)
     locationService.getCoordinates("New York") should be(None)

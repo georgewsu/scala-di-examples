@@ -3,8 +3,9 @@ package scaladiexamples.scaldi
 import scaldi.Injector
 import scaldi.Injectable
 import scaladiexamples.Geocoder
+import scaladiexamples.LocationService
 
-class LocationService()(implicit injector: Injector) extends Injectable {
+class LocationServiceImpl()(implicit injector: Injector) extends LocationService with Injectable {
 
   val geocoder = inject [Geocoder]
 

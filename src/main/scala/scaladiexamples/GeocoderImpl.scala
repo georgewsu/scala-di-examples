@@ -6,7 +6,7 @@ class GeocoderImpl extends Geocoder {
 
   def getCoordinates(location: String): Option[(Double, Double)] = {
     val xml = Http("http://maps.google.com/maps/api/geocode/xml").param("address", location).asXml
-    (xml \ "status").headOption flatMap { statusNode =>
+    val result = (xml \ "status").headOption flatMap { statusNode =>
       if (statusNode.text == "OK") {
         (xml \\ "location").headOption map { locationNode =>
           val lat = (locationNode \ "lat").text
@@ -18,6 +18,8 @@ class GeocoderImpl extends Geocoder {
         None
       }
     }
+    Thread.sleep(1000)
+    result
   }
 
 }
